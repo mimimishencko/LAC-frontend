@@ -70,9 +70,9 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Дата приобретения товара</mat-label>
-      <input matInput formControlName="purchaseData"   required>
-<!--      <mat-datepicker-toggle matSuffix  [for]="picker"></mat-datepicker-toggle>-->
-<!--      <mat-datepicker #picker></mat-datepicker>-->
+      <input matInput [matDatepickerFilter]="dateFilter" [matDatepicker]="picker" formControlName="purchaseData" required>
+      <mat-datepicker-toggle matSuffix  [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="form.controls['purchaseData'].invalid">Это поле обязательно</mat-error>
     </mat-form-field>
 
@@ -85,9 +85,6 @@
     </mat-form-field>
 
     <button type="submit" mat-raised-button color="primary">Сгенерировать досудебную жалобу</button>
-<!--    <button ></button>-->
   </form>
 
-<!--<button (click)="send()">143 <3</button>-->
-<!--<iframe class="pdf-frame" *ngIf="pdfDocument" [attr.src]="pdfDocument" type="application/pdf"></iframe>-->
 

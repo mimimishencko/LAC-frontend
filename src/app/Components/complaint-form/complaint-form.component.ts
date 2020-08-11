@@ -7,8 +7,7 @@ import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
-// @ts-ignore
-// import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 // @ts-ignore
@@ -33,11 +32,11 @@ export const MY_FORMATS = {
   templateUrl: './complaint-form.component.html',
   styleUrls: ['./complaint-form.component.scss'],
   providers: [
-    // {
-    //   provide: DateAdapter,
-    //   useClass: MomentDateAdapter,
-    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    // },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
 
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ]
