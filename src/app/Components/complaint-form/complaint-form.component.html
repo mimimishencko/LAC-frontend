@@ -1,0 +1,93 @@
+ <div class="complaint-form-header">
+   <p class="header-text">Введите ваши данные</p>
+ </div>
+
+
+  <form class="form-container" [formGroup]="form" (submit)="send()">
+    <div class="form-section-header">ФИО</div>
+
+    <mat-form-field appearance="outline">
+    <mat-label>Фамилия</mat-label>
+    <input matInput formControlName="lastName" required>
+    <mat-error *ngIf="form.controls['lastName'].invalid">Это поле обязательно</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Имя</mat-label>
+    <input matInput formControlName="firstName" required>
+    <mat-error *ngIf="form.controls['firstName'].invalid">Это поле обязательно</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Отчество</mat-label>
+    <input matInput formControlName="middleName" required>
+    <mat-error *ngIf="form.controls['middleName'].invalid">Это поле обязательно</mat-error>
+  </mat-form-field>
+
+    <div class="form-section-header">Адрес</div>
+    <div formGroupName="addressGroup">
+      <div class = "form-section-container">
+      <mat-form-field class="w-48" appearance="outline">
+        <mat-label>Город</mat-label>
+        <input matInput placeholder="г. Санкт-Петербург" formControlName="city" required>
+      </mat-form-field>
+      <mat-form-field class="w-48" appearance="outline">
+        <mat-label>Улица</mat-label>
+        <input matInput placeholder="ул. Чайковского" formControlName="street" required>
+      </mat-form-field>
+      </div>
+      <div class = "form-section-container">
+      <mat-form-field class="w-48" appearance="outline">
+        <mat-label>Дом</mat-label>
+        <input matInput placeholder="д. 1" formControlName="building" required>
+      </mat-form-field>
+      <mat-form-field class="w-48" appearance="outline">
+        <mat-label>Квартира</mat-label>
+        <input matInput placeholder="кв. 1" formControlName="flat" >
+      </mat-form-field>
+      </div>
+    </div>
+    <div class="form-section-header">Информация о покупке</div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>ИНН / Swift / БИК потребителя</mat-label>
+      <input matInput formControlName="consumerInfo" required>
+      <mat-error *ngIf="form.controls['consumerInfo'].invalid">Это поле обязательно</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Номер вашего банковского счета</mat-label>
+      <input matInput placeholder="pat@example.com" formControlName="customerAccountNumber" required>
+      <mat-error *ngIf="form.controls['customerAccountNumber'].invalid">Это поле обязательно</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>ИНН продавца</mat-label>
+      <input matInput formControlName="sellerINN" required>
+      <mat-error *ngIf="form.controls['sellerINN'].invalid">Это поле обязательно</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Дата приобретения товара</mat-label>
+      <input matInput formControlName="purchaseData"   required>
+<!--      <mat-datepicker-toggle matSuffix  [for]="picker"></mat-datepicker-toggle>-->
+<!--      <mat-datepicker #picker></mat-datepicker>-->
+      <mat-error *ngIf="form.controls['purchaseData'].invalid">Это поле обязательно</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Наименование товара</mat-label>
+      <input matInput formControlName="productName" required>
+
+      <mat-error *ngIf="form.controls['productName'].invalid">Это поле обязательно</mat-error>
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary">Сгенерировать досудебную жалобу</button>
+<!--    <button ></button>-->
+  </form>
+
+<!--<button (click)="send()">143 <3</button>-->
+<!--<iframe class="pdf-frame" *ngIf="pdfDocument" [attr.src]="pdfDocument" type="application/pdf"></iframe>-->
+

@@ -1,0 +1,51 @@
+//TODO move to global styles
+
+@import '~@angular/material/theming';
+
+
+$app-primary: mat-palette($mat-indigo);
+$primary: mat-color($app-primary);
+
+:host {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  align-content: center;
+  width: 60%;
+  max-width: 500px;
+  //margin-top: 32px;
+  margin: 32px auto;
+}
+
+.complaint-form-header {
+  color: $primary;
+  text-align: center;
+  font-size: 32px;
+  //margin: 20px auto;
+  font-weight: bold;
+}
+
+.form-section-container {
+  display: flex;
+  width: auto;
+  justify-content: space-between;
+}
+
+.form-section-header {
+  margin-bottom: 5px;
+  color: $primary;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-48 {
+  width: 48%;
+}
