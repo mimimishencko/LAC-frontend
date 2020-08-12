@@ -3,18 +3,18 @@
  </div>
 
 
-  <form class="form-container" [formGroup]="form" (submit)="send()">
+  <form class="form-container" [formGroup]="form" (submit)="send()" autocomplete="off">
     <div class="form-section-header">ФИО</div>
 
     <mat-form-field appearance="outline">
     <mat-label>Фамилия</mat-label>
-    <input matInput formControlName="lastName" required>
+    <input autocomplete="off" matInput formControlName="lastName" required>
     <mat-error *ngIf="form.controls['lastName'].invalid">Это поле обязательно</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Имя</mat-label>
-    <input matInput formControlName="firstName" required>
+    <input autocomplete="off" matInput formControlName="firstName" required>
     <mat-error *ngIf="form.controls['firstName'].invalid">Это поле обязательно</mat-error>
   </mat-form-field>
 
@@ -57,7 +57,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Номер вашего банковского счета</mat-label>
-      <input matInput placeholder="pat@example.com" formControlName="customerAccountNumber" required>
+      <input matInput formControlName="customerAccountNumber" required>
       <mat-error *ngIf="form.controls['customerAccountNumber'].invalid">Это поле обязательно</mat-error>
     </mat-form-field>
 
@@ -70,7 +70,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Дата приобретения товара</mat-label>
-      <input matInput [matDatepickerFilter]="dateFilter" [matDatepicker]="picker" formControlName="purchaseData" required>
+      <input matInput placeholder="01.01.2000" [matDatepickerFilter]="dateFilter" [matDatepicker]="picker" formControlName="purchaseData" required>
       <mat-datepicker-toggle matSuffix  [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="form.controls['purchaseData'].invalid">Это поле обязательно</mat-error>
@@ -86,5 +86,6 @@
 
     <button type="submit" mat-raised-button color="primary">Сгенерировать досудебную жалобу</button>
   </form>
+<!-- <button (click)="fakeSend()" mat-raised-button color="primary">Мок для тестирования</button>-->
 
 

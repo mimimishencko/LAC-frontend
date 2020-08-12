@@ -67,31 +67,18 @@ export class ComplaintFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(typeof  this.form.get('addressGroup').value);
-
+    this.form.controls.purchaseData.valueChanges.subscribe((data) => console.log(this.setTime()));
   }
 
   dateFilter = (d: Date | null): boolean => {
-    // const day = (d || new Date()).getDay();
-    // Prevent Saturday and Sunday from being selected.
     return d < new Date();
   };
 
   send() {
-    // const payload = {
-    //   address: 'г. Санкт-Петербург, ул. Адмирала Черокова, д. 20, лит.А, кв.909',
-    //   consumerInfo: '044030790',
-    //   customerAccountNumber: '40817810390060017104',
-    //   firstName: 'Анастасия',
-    //   lastName: 'Мищенко',
-    //   middleName: 'Дмитриевна',
-    //   productName: 'лисица канадская 1шт',
-    //   purchaseData: '04.08.2020',
-    //   sellerINN: '2309085638',
-    // };
     const address = this.addressGenerating();
     this.form.patchValue({address});
     this.form.removeControl('addressGroup');
+    this.form.patchValue({purchaseData: this.setTime()});
     this.pdfService.generateDocument(this.form.value).pipe(catchError(error => {
       return throwError(error);
     }))
@@ -103,14 +90,42 @@ export class ComplaintFormComponent implements OnInit {
       });
   }
 
+
+  fakeSend() {
+    const payload = {
+      address: 'г. Санкт-Петербург, ул. Адмирала Черокова, д. 20, лит.А, кв.909',
+      consumerInfo: '044030790',
+      customerAccountNumber: '40817810390060017104',
+      firstName: 'Анастасия',
+      lastName: 'Мищенко',
+      middleName: 'Дмитриевна',
+      productName: 'лисица канадская 1шт',
+      purchaseData: '04.08.2020',
+      sellerINN: '2309085638',
+    };
+    this.pdfService.generateDocument(payload).pipe(catchError(error => {
+      return throwError(error);
+    }))
+        .subscribe((report) => {
+          const mediaType = 'application/pdf';
+          const blob = new Blob([ report ], {type: mediaType});
+          this.pdfService.document = this.domSanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+          this.router.navigateByUrl('pdf').then();
+        });
+  }
+
   private addressGenerating() {
     const address = [];
-    console.log(typeof  this.form.get('addressGroup').value);
     for ( const key in this.form.get('addressGroup').value ) {
       address.push(this.form.get('addressGroup').value[key]);
       }
 
     return address.join(', ');
+    }
+    // TODO search for better way
+    private setTime() {
+    const time = this.form.controls.purchaseData.value;
+    return(moment(time).format( 'DD.MM.yyyy'));
     }
   }
 
