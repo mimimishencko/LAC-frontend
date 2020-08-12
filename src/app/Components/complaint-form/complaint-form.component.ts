@@ -75,19 +75,22 @@ export class ComplaintFormComponent implements OnInit {
   };
 
   send() {
-    const address = this.addressGenerating();
-    this.form.patchValue({address});
-    this.form.removeControl('addressGroup');
-    this.form.patchValue({purchaseData: this.setTime()});
-    this.pdfService.generateDocument(this.form.value).pipe(catchError(error => {
-      return throwError(error);
-    }))
-      .subscribe((report) => {
-        const mediaType = 'application/pdf';
-        const blob = new Blob([ report ], {type: mediaType});
-        this.pdfService.document = this.domSanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
-        this.router.navigateByUrl('pdf').then();
-      });
+    this.form.controls.address.markAllAsTouched();
+    if(this.form.valid) {
+      const address = this.addressGenerating();
+      this.form.patchValue({address});
+      this.form.removeControl('addressGroup');
+      this.form.patchValue({purchaseData: this.setTime()});
+      this.pdfService.generateDocument(this.form.value).pipe(catchError(error => {
+        return throwError(error);
+      }))
+          .subscribe((report) => {
+            const mediaType = 'application/pdf';
+            const blob = new Blob([report], {type: mediaType});
+            this.pdfService.document = this.domSanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+            this.router.navigateByUrl('pdf').then();
+          });
+    }
   }
 
 
