@@ -72,14 +72,17 @@ export class ComplaintFormComponent implements OnInit {
 
   dateFilter = (d: Date | null): boolean => {
     return d < new Date();
-  };
+  }
 
-  send() {
+  send(event) {
+    event.preventDefault();
     this.form.controls.address.markAllAsTouched();
-    if(this.form.valid) {
+    if (this.form.valid) {
+      if (this.form.controls.addressGroup) {
       const address = this.addressGenerating();
       this.form.patchValue({address});
       this.form.removeControl('addressGroup');
+      }
       this.pdfService.generateDocument(this.form.value).pipe(catchError(error => {
         return throwError(error);
       }))

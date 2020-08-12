@@ -3,7 +3,7 @@
  </div>
 
 
-  <form class="form-container" [formGroup]="form" (submit)="send()" autocomplete="off">
+  <form class="form-container" [formGroup]="form">
     <div class="form-section-header">ФИО</div>
 
     <mat-form-field appearance="outline">
@@ -84,7 +84,7 @@
       <mat-error *ngIf="form.controls['productName'].invalid">Это поле обязательно</mat-error>
     </mat-form-field>
 
-    <button type="submit" mat-raised-button color="primary">Сгенерировать досудебную жалобу</button>
+    <button (click)="send($event)"  mat-raised-button color="primary">Сгенерировать досудебную жалобу</button>
     <button (click)="fakeSend()" class="mock-button" mat-raised-button color="primary">Мок для тестирования</button>
 
   </form>
