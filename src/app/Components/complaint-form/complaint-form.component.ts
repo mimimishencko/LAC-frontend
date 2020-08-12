@@ -39,6 +39,7 @@ export const MY_FORMATS = {
     },
 
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ]
 })
 export class ComplaintFormComponent implements OnInit {
@@ -67,7 +68,7 @@ export class ComplaintFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form.controls.purchaseData.valueChanges.subscribe((data) => console.log(this.setTime()));
+    this.form.controls.purchaseData.valueChanges.subscribe((data) => console.log(data.toString()));
   }
 
   dateFilter = (d: Date | null): boolean => {
@@ -105,7 +106,7 @@ export class ComplaintFormComponent implements OnInit {
       lastName: 'Мищенко',
       middleName: 'Дмитриевна',
       productName: 'лисица канадская 1шт',
-      purchaseData: '04.08.2020',
+      purchaseData: '2020-08-11T21:00:00.000Z',
       sellerINN: '2309085638',
     };
     this.pdfService.generateDocument(payload).pipe(catchError(error => {
