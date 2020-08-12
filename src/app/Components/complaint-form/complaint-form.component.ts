@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {PdfDocumentService} from '../../Services/pdf-document.service';
-import {catchError} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
@@ -80,7 +80,6 @@ export class ComplaintFormComponent implements OnInit {
       const address = this.addressGenerating();
       this.form.patchValue({address});
       this.form.removeControl('addressGroup');
-      this.form.patchValue({purchaseData: this.setTime()});
       this.pdfService.generateDocument(this.form.value).pipe(catchError(error => {
         return throwError(error);
       }))
