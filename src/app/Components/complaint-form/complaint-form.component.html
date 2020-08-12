@@ -50,7 +50,7 @@
     <div class="form-section-header">Информация о покупке</div>
 
     <mat-form-field appearance="outline">
-      <mat-label>ИНН / Swift / БИК потребителя</mat-label>
+      <mat-label>Ваш ИНН / Swift / БИК </mat-label>
       <input matInput formControlName="consumerInfo" required>
       <mat-error *ngIf="form.controls['consumerInfo'].invalid">Это поле обязательно</mat-error>
     </mat-form-field>
@@ -86,6 +86,6 @@
 
     <button type="submit" mat-raised-button color="primary">Сгенерировать досудебную жалобу</button>
   </form>
-<!-- <button (click)="fakeSend()" mat-raised-button color="primary">Мок для тестирования</button>-->
+ <button (click)="fakeSend()" mat-raised-button color="primary">Мок для тестирования</button>
 
 
