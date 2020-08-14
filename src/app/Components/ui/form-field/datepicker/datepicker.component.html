@@ -1,0 +1,7 @@
+<mat-form-field class="{{class}}" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input matInput [placeholder]="placeholder" [matDatepickerFilter]="filter" [matDatepicker]="picker" [required]="required">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.controls[formControlName].invalid">Это поле обязательно</mat-error>
+</mat-form-field>

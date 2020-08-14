@@ -3,90 +3,88 @@
  </div>
 
 
-  <form class="form-container" [formGroup]="form">
-    <div class="form-section-header">ФИО</div>
+ <form class="form-container" [formGroup]="fioForm">
+   <div class="form-section-header">ФИО</div>
+    <ng-container *ngFor="let field of fioFields">
+       <app-input-form-field
+                       [label]="field.label"
+                       [placeholder]="field.placeholder || ''"
+                       [form]="fioForm"
+                       [formControlName]="field.formControlName"
+                       [required]="field.required">
+       </app-input-form-field>
+    </ng-container>
+ </form>
 
-    <mat-form-field appearance="outline">
-    <mat-label>Фамилия</mat-label>
-    <input autocomplete="off" matInput formControlName="lastName" required>
-    <mat-error *ngIf="form.controls['lastName'].invalid">Это поле обязательно</mat-error>
-  </mat-form-field>
+ <form class="form-container" [formGroup]="addressForm">
+   <div class="form-section-header">Адрес</div>
+     <ng-container *ngFor="let field of addressFields">
 
-  <mat-form-field appearance="outline">
-    <mat-label>Имя</mat-label>
-    <input autocomplete="off" matInput formControlName="firstName" required>
-    <mat-error *ngIf="form.controls['firstName'].invalid">Это поле обязательно</mat-error>
-  </mat-form-field>
+         <ng-container *ngTemplateOutlet="field.type && field.type === fieldTypes.SELECT ? select : common"></ng-container>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Отчество</mat-label>
-    <input matInput formControlName="middleName" required>
-    <mat-error *ngIf="form.controls['middleName'].invalid">Это поле обязательно</mat-error>
-  </mat-form-field>
+             <ng-template #common>
+                   <app-input-form-field
+                                   [label]="field.label"
+                                   [class]="'w-48'"
+                                   [placeholder]="field.placeholder || ''"
+                                   [form]="addressForm"
+                                   [formControlName]="field.formControlName"
+                                   [required]="field.required">
+                   </app-input-form-field>
+             </ng-template>
 
-    <div class="form-section-header">Адрес</div>
-    <div formGroupName="addressGroup">
-      <div class = "form-section-container">
-      <mat-form-field class="w-48" appearance="outline">
-        <mat-label>Город</mat-label>
-        <input matInput placeholder="г. Санкт-Петербург" formControlName="city" required>
-      </mat-form-field>
-      <mat-form-field class="w-48" appearance="outline">
-        <mat-label>Улица</mat-label>
-        <input matInput placeholder="ул. Чайковского" formControlName="street" required>
-      </mat-form-field>
-      </div>
-      <div class = "form-section-container">
-      <mat-form-field class="w-48" appearance="outline">
-        <mat-label>Дом</mat-label>
-        <input matInput placeholder="д. 1" formControlName="building" required>
-      </mat-form-field>
-      <mat-form-field class="w-48" appearance="outline">
-        <mat-label>Квартира</mat-label>
-        <input matInput placeholder="кв. 1" formControlName="flat" >
-      </mat-form-field>
-      </div>
-    </div>
-    <div class="form-section-header">Информация о покупке</div>
+             <ng-template #select>
+                 <app-select-field
+                         [label]="field.label"
+                         [class]="'w-48'"
+                         [placeholder]="field.placeholder || ''"
+                         [form]="addressForm"
+                         [formControlName]="field.formControlName"
+                         [required]="field.required">
+                 </app-select-field>
+             </ng-template>
+     </ng-container>
+ </form>
+ <form class="form-container" [formGroup]="productForm">
+   <div class="form-section-header">Информация о покупке</div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Ваш ИНН / Swift / БИК </mat-label>
-      <input matInput formControlName="consumerInfo" required>
-      <mat-error *ngIf="form.controls['consumerInfo'].invalid">Это поле обязательно</mat-error>
-    </mat-form-field>
+     <ng-container *ngFor="let field of productFields" >
+         <ng-container *ngTemplateOutlet="field.type && field.type === fieldTypes.DATE ? date : common "></ng-container>
+            <ng-template #date>
+                 <app-datepicker
+                                       [label]="field.label"
+                                       [placeholder]="field.placeholder || ''"
+                                       [form]="productForm"
+                                       [formControlName]="field.formControlName"
+                                       [required]="field.required">
+                 </app-datepicker>
+            </ng-template>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Номер вашего банковского счета</mat-label>
-      <input matInput formControlName="customerAccountNumber" required>
-      <mat-error *ngIf="form.controls['customerAccountNumber'].invalid">Это поле обязательно</mat-error>
-    </mat-form-field>
+            <ng-template #common>
+                   <app-input-form-field
+                                   [label]="field.label"
+                                   [placeholder]="field.placeholder || ''"
+                                   [form]="productForm"
+                                   [formControlName]="field.formControlName"
+                                   [required]="field.required">
+                   </app-input-form-field>
+            </ng-template>
+     </ng-container>
+ </form>
 
-    <mat-form-field appearance="outline">
-      <mat-label>ИНН продавца</mat-label>
-      <input matInput formControlName="sellerINN" required>
-      <mat-error *ngIf="form.controls['sellerINN'].invalid">Это поле обязательно</mat-error>
-    </mat-form-field>
+ <form class="form-container" [formGroup]="credentialsForm">
+   <div class="form-section-header">Реквизиты</div>
 
+   <app-input-form-field *ngFor="let field of credentialsFields"
+                   [label]="field.label"
+                   [placeholder]="field.placeholder || ''"
+                   [form]="credentialsForm"
+                   [formControlName]="field.formControlName"
+                   [required]="field.required">
+   </app-input-form-field>
+ </form>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Дата приобретения товара</mat-label>
-      <input matInput placeholder="01.01.2000" [matDatepickerFilter]="dateFilter" [matDatepicker]="picker" formControlName="purchaseData" required>
-      <mat-datepicker-toggle matSuffix  [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="form.controls['purchaseData'].invalid">Это поле обязательно</mat-error>
-    </mat-form-field>
-
-
-    <mat-form-field appearance="outline">
-      <mat-label>Наименование товара</mat-label>
-      <input matInput formControlName="productName" required>
-
-      <mat-error *ngIf="form.controls['productName'].invalid">Это поле обязательно</mat-error>
-    </mat-form-field>
-
-    <button (click)="send($event)"  mat-raised-button color="primary">Сгенерировать досудебную жалобу</button>
-    <button (click)="fakeSend()" class="mock-button" mat-raised-button color="primary">Мок для тестирования</button>
-
-  </form>
-
+ <div class="form-container form-button">
+  <button  (click)="fakeSend()" mat-raised-button color="primary" >Мок для тестирования</button>
+ </div>
 

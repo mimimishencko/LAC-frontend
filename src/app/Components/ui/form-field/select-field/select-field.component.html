@@ -1,0 +1,14 @@
+<mat-form-field [class]="class" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input matInput
+           [placeholder]="placeholder"
+           (change)="propagateChange($event)"
+           [required]="required"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of options$ | async" [value]="option">
+            {{option}}
+        </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="required && form.controls[formControlName].invalid">Это поле обязательно</mat-error>
+</mat-form-field>

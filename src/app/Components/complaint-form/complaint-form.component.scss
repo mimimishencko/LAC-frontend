@@ -19,8 +19,7 @@ $primary: mat-color($app-primary);
   align-content: center;
   width: 60%;
   max-width: 500px;
-  //margin-top: 32px;
-  margin: 32px auto;
+  margin: 32px auto 0;
 }
 
 .complaint-form-header {
@@ -50,6 +49,6 @@ $primary: mat-color($app-primary);
   width: 48%;
 }
 
-.mock-button {
-  margin-top: 20px;
+.form-button {
+  margin-bottom: 32px;
 }

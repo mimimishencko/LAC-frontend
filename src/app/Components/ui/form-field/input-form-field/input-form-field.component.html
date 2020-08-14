@@ -1,0 +1,9 @@
+<mat-form-field [class]="class" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input matInput
+           [placeholder]="placeholder"
+           (change)="propagateChange($event)"
+           [required]="required">
+    <mat-error *ngIf="required && form.controls[formControlName].invalid">Это поле обязательно</mat-error>
+</mat-form-field>
+

@@ -14,6 +14,15 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
 import { MomentDateModule, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { SnackBarComponent } from './Components/ui/snack-bar/snack-bar.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxDadataModule } from '@kolkov/ngx-dadata';
+import { FormFieldAbstractComponent } from './Components/ui/form-field/form-field-abstract.component';
+import { InputFormFieldComponent } from './Components/ui/form-field/input-form-field/input-form-field.component';
+import { DatepickerComponent } from './Components/ui/form-field/datepicker/datepicker.component';
+import { SelectFieldComponent } from './Components/ui/form-field/select-field/select-field.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 
 export const MY_FORMATS = {
   parse: {
@@ -32,7 +41,11 @@ export const MY_FORMATS = {
   declarations: [
     AppComponent,
     PdfPageComponent,
-    ComplaintFormComponent
+    ComplaintFormComponent,
+    SnackBarComponent,
+    InputFormFieldComponent,
+    DatepickerComponent,
+    SelectFieldComponent
   ],
   imports: [
     FormsModule,
@@ -47,11 +60,12 @@ export const MY_FORMATS = {
     MatDatepickerModule,
     MatNativeDateModule,
     MomentDateModule,
+    MatSnackBarModule,
+    NgxDadataModule,
+    MatAutocompleteModule,
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'always'}},
-    // { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    // { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
   ],
   bootstrap: [AppComponent]
 })
