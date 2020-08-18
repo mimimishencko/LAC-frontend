@@ -14,5 +14,6 @@ export interface IFormField {
     value?: string | number;
     class?: string;
     required: boolean;
-    type?: FormFieldType.DATE | FormFieldType.SELECT;
+    type?: FormFieldType.DATE | FormFieldType.SELECT | FormFieldType.COMMON;
+    disabled?: boolean;
 }

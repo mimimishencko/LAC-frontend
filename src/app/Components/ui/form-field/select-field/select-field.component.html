@@ -2,11 +2,14 @@
     <mat-label>{{label}}</mat-label>
     <input matInput
            [placeholder]="placeholder"
-           (change)="propagateChange($event)"
            [required]="required"
-           [matAutocomplete]="auto">
+           [matAutocomplete]="auto"
+           [disabled]="disabled"
+            appInput
+           (getPrompt)="getAddressPrompt($event)"
+    >
     <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of options$ | async" [value]="option">
+        <mat-option *ngFor="let option of options$ | async" [value]="option" (onSelectionChange)="propagateChange($event.source.value)">
             {{option}}
         </mat-option>
     </mat-autocomplete>

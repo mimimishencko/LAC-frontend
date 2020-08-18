@@ -22,6 +22,7 @@ import { InputFormFieldComponent } from './Components/ui/form-field/input-form-f
 import { DatepickerComponent } from './Components/ui/form-field/datepicker/datepicker.component';
 import { SelectFieldComponent } from './Components/ui/form-field/select-field/select-field.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { InputDirective } from './Components/ui/form-field/select-field/input.directive';
 
 
 export const MY_FORMATS = {
@@ -45,7 +46,8 @@ export const MY_FORMATS = {
     SnackBarComponent,
     InputFormFieldComponent,
     DatepickerComponent,
-    SelectFieldComponent
+    SelectFieldComponent,
+    InputDirective
   ],
   imports: [
     FormsModule,

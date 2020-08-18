@@ -2,8 +2,9 @@
     <mat-label>{{label}}</mat-label>
     <input matInput
            [placeholder]="placeholder"
-           (change)="propagateChange($event)"
-           [required]="required">
+           (change)="propagateChange($event.target.value)"
+           [required]="required"
+           [disabled]="disabled">
     <mat-error *ngIf="required && form.controls[formControlName].invalid">Это поле обязательно</mat-error>
 </mat-form-field>
 

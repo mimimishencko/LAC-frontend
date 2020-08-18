@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -16,6 +16,8 @@ import {SnackBarService} from '../ui/snack-bar/snack-bar.service';
 import {DadataAddress, DadataConfig, DadataSuggestion, DadataType} from '@kolkov/ngx-dadata';
 import * as formConstants from '../../constants/forms-constants';
 import {FormFieldType} from '../../Interfaces/IFormField';
+import {DadataService} from '../../Services/dadata.service';
+import {addressFieldDisabled} from '../../constants/form-helpers';
 
 const moment = _rollupMoment || _moment;
 
@@ -61,16 +63,15 @@ export class ComplaintFormComponent implements OnInit {
 
   public fieldTypes = FormFieldType;
 
-  public dadataConfig: DadataConfig = {
-    apiKey: '319411ed3286895a479d6faeaa1f6c2f1b5808ac',
-    type: DadataType.address
-  };
+
 
   constructor( private http: HttpClient,
                private domSanitizer: DomSanitizer,
                private pdfService: PdfDocumentService,
                private router: Router,
-               private snackBarService: SnackBarService) {
+               private snackBarService: SnackBarService,
+               private dadataService: DadataService,
+               private cdr: ChangeDetectorRef) {
     this.fioForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
       middleName: new FormControl('', [Validators.required]),
@@ -78,11 +79,12 @@ export class ComplaintFormComponent implements OnInit {
     });
 
     this.addressForm =  new FormGroup({
-        region: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required]),
-        street: new FormControl('', [Validators.required]),
-        building: new FormControl('', [Validators.required]),
-        flat: new FormControl(''),
+        address: new FormControl('', [Validators.required]),
+        // city: new FormControl('', [Validators.required]),
+        // index: new FormControl('', [Validators.required]),
+        // street: new FormControl('', [Validators.required]),
+        // building: new FormControl('', [Validators.required]),
+        // flat: new FormControl(''),
       });
 
     this.credentialsForm = new FormGroup({
@@ -98,33 +100,11 @@ export class ComplaintFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.addressForm.valueChanges.subscribe(() => {
+      console.log('change detection');
+      this.cdr.detectChanges();
+    });
   }
-
-  dateFilter = (d: Date | null): boolean => {
-    return d < new Date();
-  }
-
-  // send(event) {
-  //   event.preventDefault();
-  //   this.form.controls.address.markAllAsTouched();
-  //   if (this.form.valid) {
-  //     if (this.form.controls.addressGroup) {
-  //     const address = this.addressGenerating();
-  //     this.form.patchValue({address});
-  //     this.form.removeControl('addressGroup');
-  //     }
-  //     this.pdfService.generateDocument(this.form.value).pipe(catchError(error => {
-  //       console.log(error);
-  //       return throwError(error);
-  //     }))
-  //         .subscribe((report) => {
-  //           const mediaType = 'application/pdf';
-  //           const blob = new Blob([report], {type: mediaType});
-  //           this.pdfService.document = this.domSanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
-  //           this.router.navigateByUrl('pdf').then();
-  //         });
-  //   }
-  // }
 
 
   fakeSend() {
@@ -152,27 +132,9 @@ export class ComplaintFormComponent implements OnInit {
         });
   }
 
-  // private addressGenerating() {
-  //   const address = [];
-  //   for ( const key in this.form.get('addressGroup').value ) {
-  //     address.push(this.form.get('addressGroup').value[key]);
-  //     }
-  //
-  //   return address.join(', ');
-  //   }
-  //   // TODO search for better way
-  // private setTime() {
-  //   const time = this.form.controls.purchaseData.value;
-  //   return(moment(time).format( 'DD.MM.yyyy'));
-  //   }
-  //
-  // onAddressSelected(event: DadataSuggestion) {
-  //   const addressData = event.data as DadataAddress;
-  //   console.log(addressData);
-  // }
-  //
-  // searchFor(event) {
-  //   console.log(event);
-  // }
+  addressFieldDisabled(formField: string): boolean {
+    return addressFieldDisabled(formField, this.addressForm);
+  }
+
   }
 

@@ -1,4 +1,5 @@
 import {FormFieldType, IFormField} from '../Interfaces/IFormField';
+import {FormGroup} from '@angular/forms';
 
 export const fioForm: IFormField[] = [
     {
@@ -24,40 +25,51 @@ export const fioForm: IFormField[] = [
 
 export const addressForm: IFormField[] = [
     {
-        label: 'Область / регион / край / республика',
-        placeholder: 'Ростовская область',
-        formControlName: 'region',
+        label: 'Адрес',
+        placeholder: '340000, Ростовская обл, г Ростов-на-Дону, ул. Большая Садовая, д 1, кв 1',
+        formControlName: 'address',
         required: true,
         type: FormFieldType.SELECT,
     },
-    {
-        label: 'Населенный пункт',
-        placeholder: 'г. Ростова-на-Дону',
-        formControlName: 'city',
-        required: true,
-        type: FormFieldType.SELECT,
-    },
-    {
-        label: 'Улица',
-        placeholder: 'Большая Садовая',
-        formControlName: 'street',
-        required: false,
-        type: FormFieldType.SELECT,
-    },
-    {
-        label: 'Дом',
-        placeholder: 'д. 1',
-        formControlName: 'building',
-        required: true,
-        type: FormFieldType.SELECT,
-    },
-    {
-        label: 'Квартира',
-        placeholder: 'кв. 1',
-        formControlName: 'flat',
-        required: false,
-        type: FormFieldType.SELECT,
-    },
+    // {
+    //     label: 'Населенный пункт',
+    //     placeholder: 'Ростов-на-Дону',
+    //     formControlName: 'city',
+    //     required: true,
+    //     type: FormFieldType.SELECT,
+    // },
+    // {
+    //     label: 'Улица',
+    //     placeholder: 'Большая Садовая',
+    //     formControlName: 'street',
+    //     required: false,
+    //     class: 'w-48',
+    //     type: FormFieldType.SELECT,
+    // },
+    // {
+    //     label: 'Дом',
+    //     placeholder: 'д. 1',
+    //     formControlName: 'building',
+    //     required: true,
+    //     class: 'w-48',
+    //     type: FormFieldType.SELECT,
+    // },
+    // {
+    //     label: 'Квартира',
+    //     placeholder: 'кв. 1',
+    //     formControlName: 'flat',
+    //     required: false,
+    //     class: 'w-48',
+    //     type: FormFieldType.SELECT,
+    // },
+    // {
+    //     label: 'Индекс',
+    //     placeholder: '34000',
+    //     formControlName: 'index',
+    //     required: true,
+    //     class: 'w-48',
+    //     type: FormFieldType.COMMON,
+    // },
 ];
 
 export const credentialsForm: IFormField[] = [

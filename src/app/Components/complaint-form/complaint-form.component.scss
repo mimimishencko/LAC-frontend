@@ -11,17 +11,23 @@ $primary: mat-color($app-primary);
   justify-content: center;
   flex-direction: column;
   align-content: center;
+  width: 80%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 .form-container {
   display: flex;
-  flex-direction: column;
-  flex-basis: auto;
-  align-content: center;
-  width: 60%;
-  max-width: 500px;
-  margin: 32px auto 0;
+  flex-direction: row;
+  flex-basis: 100%;
+  justify-content: space-between;
+
+  //margin: 32px auto 0;
 }
 
+.flex-grow {
+  flex-grow: 1;
+  margin-right: 20px;
+}
 .complaint-form-header {
   color: $primary;
   text-align: center;
@@ -51,4 +57,18 @@ $primary: mat-color($app-primary);
 
 .form-button {
   margin-bottom: 32px;
+}
+
+@media (max-width: 767px) {
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    //margin: 32px auto 0;
+  }
+
+  .flex-grow {
+    flex-grow: 1;
+    margin-right: 0;
+  }
 }

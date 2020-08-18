@@ -2,12 +2,12 @@
    <p class="header-text">Введите ваши данные</p>
  </div>
 
-
+ <div class="form-section-header">ФИО</div>
  <form class="form-container" [formGroup]="fioForm">
-   <div class="form-section-header">ФИО</div>
     <ng-container *ngFor="let field of fioFields">
-       <app-input-form-field
+       <app-input-form-field class = "flex-grow"
                        [label]="field.label"
+                       [class]="'flex-grow'"
                        [placeholder]="field.placeholder || ''"
                        [form]="fioForm"
                        [formControlName]="field.formControlName"
@@ -16,42 +16,45 @@
     </ng-container>
  </form>
 
+ <div class="form-section-header">Адрес</div>
  <form class="form-container" [formGroup]="addressForm">
-   <div class="form-section-header">Адрес</div>
      <ng-container *ngFor="let field of addressFields">
 
          <ng-container *ngTemplateOutlet="field.type && field.type === fieldTypes.SELECT ? select : common"></ng-container>
 
              <ng-template #common>
-                   <app-input-form-field
+                   <app-input-form-field class = "flex-grow"
                                    [label]="field.label"
-                                   [class]="'w-48'"
                                    [placeholder]="field.placeholder || ''"
                                    [form]="addressForm"
                                    [formControlName]="field.formControlName"
-                                   [required]="field.required">
+                                   [required]="field.required"
+                                   [disabled]="addressFieldDisabled(field.formControlName)">
                    </app-input-form-field>
              </ng-template>
 
              <ng-template #select>
-                 <app-select-field
+                 <app-select-field class = "flex-grow"
                          [label]="field.label"
-                         [class]="'w-48'"
                          [placeholder]="field.placeholder || ''"
                          [form]="addressForm"
+                         [class]="'flex-grow'"
                          [formControlName]="field.formControlName"
-                         [required]="field.required">
+                         [required]="field.required"
+                         [disabled]="addressFieldDisabled(field.formControlName)">
                  </app-select-field>
              </ng-template>
      </ng-container>
  </form>
+
+
+ <div class="form-section-header">Информация о покупке</div>
  <form class="form-container" [formGroup]="productForm">
-   <div class="form-section-header">Информация о покупке</div>
 
      <ng-container *ngFor="let field of productFields" >
          <ng-container *ngTemplateOutlet="field.type && field.type === fieldTypes.DATE ? date : common "></ng-container>
             <ng-template #date>
-                 <app-datepicker
+                 <app-datepicker class = "flex-grow"
                                        [label]="field.label"
                                        [placeholder]="field.placeholder || ''"
                                        [form]="productForm"
@@ -61,7 +64,7 @@
             </ng-template>
 
             <ng-template #common>
-                   <app-input-form-field
+                   <app-input-form-field class = "flex-grow"
                                    [label]="field.label"
                                    [placeholder]="field.placeholder || ''"
                                    [form]="productForm"
@@ -72,10 +75,11 @@
      </ng-container>
  </form>
 
+ <div class="form-section-header">Реквизиты</div>
  <form class="form-container" [formGroup]="credentialsForm">
-   <div class="form-section-header">Реквизиты</div>
 
    <app-input-form-field *ngFor="let field of credentialsFields"
+                         class = "flex-grow"
                    [label]="field.label"
                    [placeholder]="field.placeholder || ''"
                    [form]="credentialsForm"

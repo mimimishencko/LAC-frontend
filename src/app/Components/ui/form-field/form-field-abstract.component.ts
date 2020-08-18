@@ -9,6 +9,7 @@ export abstract class FormFieldAbstractComponent implements ControlValueAccessor
   @Input() value: string | number;
   @Input() class: string;
   @Input() required: boolean;
+  @Input() disabled = false;
 
   constructor() { }
 
