@@ -1,10 +1,10 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {PdfDocumentService} from '../../Services/pdf-document.service';
-import {catchError } from 'rxjs/operators';
-import {throwError} from 'rxjs';
+import {catchError, mergeMap} from 'rxjs/operators';
+import {forkJoin, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
@@ -18,6 +18,7 @@ import * as formConstants from '../../constants/forms-constants';
 import {FormFieldType} from '../../Interfaces/IFormField';
 import {DadataService} from '../../Services/dadata.service';
 import {addressFieldDisabled} from '../../constants/form-helpers';
+import {IComplaint} from '../../Interfaces/complaint.interface';
 
 const moment = _rollupMoment || _moment;
 
@@ -54,7 +55,8 @@ export class ComplaintFormComponent implements OnInit {
   public addressForm: FormGroup;
   public credentialsForm: FormGroup;
   public productForm: FormGroup;
-  public sellerAddressForm: FormGroup;
+  public sellerInfoForm: FormGroup;
+  public consumerInfoForm: FormGroup;
 
   public fioFields = formConstants.fioForm;
   public addressFields = formConstants.addressForm;
@@ -62,6 +64,12 @@ export class ComplaintFormComponent implements OnInit {
   public productFields = formConstants.productForm;
 
   public fieldTypes = FormFieldType;
+  public consumerBankBik = '';
+  public consumerBankName = '';
+  public sellerName = '';
+  public sellerAddress = '';
+  public showSellerForm = false;
+  public showConsumerBankForm = false;
 
 
 
@@ -71,6 +79,7 @@ export class ComplaintFormComponent implements OnInit {
                private router: Router,
                private snackBarService: SnackBarService,
                private dadataService: DadataService,
+               private fb: FormBuilder,
                private cdr: ChangeDetectorRef) {
     this.fioForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -90,19 +99,42 @@ export class ComplaintFormComponent implements OnInit {
     this.credentialsForm = new FormGroup({
       consumerInfo: new FormControl('', [Validators.required]),
       customerAccountNumber: new FormControl('', [Validators.required]),
-      sellerINN: new FormControl('', [Validators.required])
+      consumerBankBik: new FormControl('', [Validators.required]),
+      consumerBankName: new FormControl('', [Validators.required])
     });
 
     this.productForm = new FormGroup({
       purchaseData: new FormControl('', [Validators.required]),
       productName: new FormControl('', [Validators.required]),
+      sellerINN: new FormControl('', [Validators.required]),
+      sellerName: new FormControl('', [Validators.required]),
+      sellerAddress: new FormControl('', [Validators.required]),
+    });
+
+    this.sellerInfoForm = this.fb.group({
+      sellerAddress: [ ''],
+      sellerName: ['']
+    });
+    this.consumerInfoForm = this.fb.group({
+      consumerBankName: [''],
+      consumerBankCorrAcc: ['']
     });
   }
 
   ngOnInit() {
+    // this.credentialsForm.patchValue({consumerInfo: '044030790'});
+    // this.productForm.patchValue({sellerINN: '2309085638'});
     this.addressForm.valueChanges.subscribe(() => {
-      console.log('change detection');
       this.cdr.detectChanges();
+    });
+    this.productForm.get('sellerINN').valueChanges.subscribe((value) => {
+      this.showSellerForm = value !== '';
+      this.collectInformationAboutSeller();
+    });
+
+    this.credentialsForm.get('consumerInfo').valueChanges.subscribe((value) => {
+      this.showConsumerBankForm = value !== '';
+      this.collectInfoAboutConsumerBank();
     });
   }
 
@@ -120,7 +152,6 @@ export class ComplaintFormComponent implements OnInit {
       sellerINN: '2309085638',
     };
     this.pdfService.generateDocument(payload).pipe(catchError(error => {
-      console.log(error);
       this.snackBarService.snackBarStatus.next(error);
       return throwError(error);
     }))
@@ -136,5 +167,50 @@ export class ComplaintFormComponent implements OnInit {
     return addressFieldDisabled(formField, this.addressForm);
   }
 
+  collectInformationAboutSeller() {
+    this.dadataService.getSellerInfo(this.productForm.controls.sellerINN.value)
+        .subscribe(dadataInformation => {
+          console.log(dadataInformation);
+          const sellerAddress = dadataInformation.suggestions[0].data.address.unrestricted_value;
+          const sellerName = dadataInformation.suggestions[0].unrestricted_value;
+          this.updateSellerInfoForm(sellerAddress, sellerName);
+    });
   }
+
+  collectInfoAboutConsumerBank() {
+    this.dadataService.getBankInformation(this.credentialsForm.controls.consumerInfo.value)
+        .subscribe((consumerBankInfo) => {
+          console.log(consumerBankInfo);
+          const consumerBankName = consumerBankInfo.suggestions ? consumerBankInfo.suggestions[0].unrestricted_value : '';
+          const consumerBankCorrAcc = consumerBankInfo.suggestions[0].data.correspondent_account;
+          console.log(consumerBankInfo);
+
+          this.updateConsumerInfoForm(consumerBankName, consumerBankCorrAcc)
+
+    });
+  }
+
+  combineDataForRequest(): IComplaint {
+    return {
+      ...this.fioForm.value,
+      ...this.addressForm.value,
+      ...this.credentialsForm.value,
+      ...this.sellerInfoForm.value,
+      ...this.consumerInfoForm.value
+    };
+
+  }
+
+  checkInfo() {
+    this.collectInformationAboutSeller();
+  }
+
+  updateSellerInfoForm(sellerAddress, sellerName): void {
+      this.sellerInfoForm.patchValue({ sellerAddress, sellerName});
+  }
+
+  updateConsumerInfoForm(consumerBankName, consumerBankCorrAcc): void {
+    this.consumerInfoForm.patchValue({ consumerBankName, consumerBankCorrAcc});
+  }
+}
 

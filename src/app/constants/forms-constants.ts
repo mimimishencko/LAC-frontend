@@ -82,11 +82,6 @@ export const credentialsForm: IFormField[] = [
         label: 'Номер вашего банковского счета',
         formControlName: 'customerAccountNumber',
         required: true,
-    },
-    {
-        label: 'ИНН продавца',
-        formControlName: 'sellerINN',
-        required: true,
     }
 ];
 
@@ -102,5 +97,10 @@ export const productForm: IFormField[] = [
         placeholder: '01.01.2020',
         required: true,
         type: FormFieldType.DATE,
+    },
+    {
+        label: 'ИНН продавца',
+        formControlName: 'sellerINN',
+        required: true,
     }
 ];

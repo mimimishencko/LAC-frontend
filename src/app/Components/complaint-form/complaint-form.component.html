@@ -75,6 +75,33 @@
      </ng-container>
  </form>
 
+ <ng-container *ngIf="showSellerForm">
+ <div class="form-section-header" >Информация о продавце</div>
+ <form class="form-container" [formGroup]="sellerInfoForm">
+
+     <mat-form-field appearance="outline" class = "flex-grow">
+         <mat-label>Адрес продавца</mat-label>
+         <input matInput
+                [placeholder]=""
+                [required]="true"
+                formControlName="sellerAddress"
+         >
+         <mat-error *ngIf="sellerInfoForm?.controls['sellerAddress']?.invalid">Это поле обязательно</mat-error>
+     </mat-form-field>
+
+
+     <mat-form-field appearance="outline" class = "flex-grow">
+         <mat-label>Наименование организации продавца</mat-label>
+         <input matInput
+                [placeholder]=""
+                [required]="true"
+                formControlName="sellerName"
+         >
+         <mat-error *ngIf="sellerInfoForm?.controls['sellerName']?.invalid">Это поле обязательно</mat-error>
+     </mat-form-field>
+ </form>
+ </ng-container>
+
  <div class="form-section-header">Реквизиты</div>
  <form class="form-container" [formGroup]="credentialsForm">
 
@@ -88,7 +115,35 @@
    </app-input-form-field>
  </form>
 
+ <ng-container *ngIf="showConsumerBankForm">
+     <div class="form-section-header" >Информация о банке потребителя</div>
+     <form class="form-container" [formGroup]="consumerInfoForm">
+
+         <mat-form-field appearance="outline" class = "flex-grow">
+             <mat-label>Наименование банка потребителя</mat-label>
+             <input matInput
+                    [placeholder]=""
+                    [required]="true"
+                    formControlName="consumerBankName"
+             >
+             <mat-error *ngIf="consumerInfoForm?.controls['consumerBankName']?.invalid">Это поле обязательно</mat-error>
+         </mat-form-field>
+
+
+         <mat-form-field appearance="outline" class = "flex-grow">
+             <mat-label>consumerBankCorrAcc</mat-label>
+             <input matInput
+                    [placeholder]=""
+                    [required]="true"
+                    formControlName="consumerBankCorrAcc"
+             >
+             <mat-error *ngIf="consumerInfoForm?.controls['consumerBankCorrAcc']?.invalid">Это поле обязательно</mat-error>
+         </mat-form-field>
+     </form>
+ </ng-container>
+
  <div class="form-container form-button">
   <button  (click)="fakeSend()" mat-raised-button color="primary" >Мок для тестирования</button>
+  <button  (click)="checkInfo()" mat-raised-button color="primary" >Сгенерировать документ</button>
  </div>
 

@@ -1,6 +1,7 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+
 import {FormFieldAbstractComponent} from '../form-field-abstract.component';
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
   selector: 'app-input-form-field',
