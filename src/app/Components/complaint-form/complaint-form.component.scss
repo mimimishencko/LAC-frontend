@@ -20,8 +20,10 @@ $primary: mat-color($app-primary);
   flex-direction: row;
   flex-basis: 100%;
   justify-content: space-between;
+}
 
-  //margin: 32px auto 0;
+.column-form-direction {
+  flex-direction: column;
 }
 
 .flex-grow {
@@ -32,7 +34,6 @@ $primary: mat-color($app-primary);
   color: $primary;
   text-align: center;
   font-size: 32px;
-  //margin: 20px auto;
   font-weight: bold;
 }
 

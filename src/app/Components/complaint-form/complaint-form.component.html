@@ -5,14 +5,13 @@
  <div class="form-section-header">ФИО</div>
  <form class="form-container" [formGroup]="fioForm">
     <ng-container *ngFor="let field of fioFields">
-       <app-input-form-field class = "flex-grow"
-                       [label]="field.label"
-                       [class]="'flex-grow'"
+        <mat-form-field appearance="outline" class = "flex-grow">
+            <mat-label>{{field.label}}</mat-label>
+            <input matInput
                        [placeholder]="field.placeholder || ''"
-                       [form]="fioForm"
                        [formControlName]="field.formControlName"
                        [required]="field.required">
-       </app-input-form-field>
+       </mat-form-field>
     </ng-container>
  </form>
 
@@ -23,14 +22,14 @@
          <ng-container *ngTemplateOutlet="field.type && field.type === fieldTypes.SELECT ? select : common"></ng-container>
 
              <ng-template #common>
-                   <app-input-form-field class = "flex-grow"
-                                   [label]="field.label"
+                 <mat-form-field appearance="outline" class = "flex-grow">
+                     <mat-label>{{field.label}}</mat-label>
+                     <input matInput
                                    [placeholder]="field.placeholder || ''"
-                                   [form]="addressForm"
                                    [formControlName]="field.formControlName"
                                    [required]="field.required"
                                    [disabled]="addressFieldDisabled(field.formControlName)">
-                   </app-input-form-field>
+                 </mat-form-field>
              </ng-template>
 
              <ng-template #select>
@@ -64,30 +63,32 @@
             </ng-template>
 
             <ng-template #common>
-                   <app-input-form-field class = "flex-grow"
-                                   [label]="field.label"
-                                   [placeholder]="field.placeholder || ''"
-                                   [form]="productForm"
-                                   [formControlName]="field.formControlName"
-                                   [required]="field.required">
-                   </app-input-form-field>
+                <mat-form-field appearance="outline" class = "flex-grow">
+                    <mat-label>{{field.label}}</mat-label>
+                    <input matInput
+                           [placeholder]="field.placeholder || ''"
+                           [formControlName]="field.formControlName"
+                           [required]="field.required">
+
+                    <mat-error *ngIf="productForm?.controls[field.formControlName]?.invalid">Это поле обязательно</mat-error>
+                </mat-form-field>
+
             </ng-template>
      </ng-container>
  </form>
 
- <ng-container *ngIf="showSellerForm">
  <div class="form-section-header" >Информация о продавце</div>
- <form class="form-container" [formGroup]="sellerInfoForm">
+ <form class="form-container column-form-direction" [formGroup]="sellerInfoForm">
 
-     <mat-form-field appearance="outline" class = "flex-grow">
-         <mat-label>Адрес продавца</mat-label>
-         <input matInput
-                [placeholder]=""
-                [required]="true"
-                formControlName="sellerAddress"
-         >
-         <mat-error *ngIf="sellerInfoForm?.controls['sellerAddress']?.invalid">Это поле обязательно</mat-error>
-     </mat-form-field>
+     <app-select-field class = "flex-grow"
+                       [label]="'Адрес продавца'"
+                       [placeholder]="''"
+                       [form]="sellerInfoForm"
+                       [class]="'flex-grow'"
+                       [formControlName]="'sellerAddress'"
+                       [required]="true"
+                       >
+     </app-select-field>
 
 
      <mat-form-field appearance="outline" class = "flex-grow">
@@ -100,24 +101,21 @@
          <mat-error *ngIf="sellerInfoForm?.controls['sellerName']?.invalid">Это поле обязательно</mat-error>
      </mat-form-field>
  </form>
- </ng-container>
 
  <div class="form-section-header">Реквизиты</div>
  <form class="form-container" [formGroup]="credentialsForm">
-
-   <app-input-form-field *ngFor="let field of credentialsFields"
-                         class = "flex-grow"
-                   [label]="field.label"
-                   [placeholder]="field.placeholder || ''"
-                   [form]="credentialsForm"
-                   [formControlName]="field.formControlName"
-                   [required]="field.required">
-   </app-input-form-field>
+     <mat-form-field appearance="outline" class = "flex-grow" *ngFor="let field of credentialsFields">
+         <mat-label>{{field.label}}</mat-label>
+         <input matInput
+                class = "flex-grow"
+                [placeholder]="field.placeholder || ''"
+                [formControlName]="field.formControlName"
+                [required]="field.required">
+   </mat-form-field>
  </form>
 
- <ng-container *ngIf="showConsumerBankForm">
      <div class="form-section-header" >Информация о банке потребителя</div>
-     <form class="form-container" [formGroup]="consumerInfoForm">
+     <form class="form-container column-form-direction" [formGroup]="consumerInfoForm">
 
          <mat-form-field appearance="outline" class = "flex-grow">
              <mat-label>Наименование банка потребителя</mat-label>
@@ -131,7 +129,7 @@
 
 
          <mat-form-field appearance="outline" class = "flex-grow">
-             <mat-label>consumerBankCorrAcc</mat-label>
+             <mat-label>Корреспондентский счет</mat-label>
              <input matInput
                     [placeholder]=""
                     [required]="true"
@@ -140,7 +138,6 @@
              <mat-error *ngIf="consumerInfoForm?.controls['consumerBankCorrAcc']?.invalid">Это поле обязательно</mat-error>
          </mat-form-field>
      </form>
- </ng-container>
 
  <div class="form-container form-button">
   <button  (click)="fakeSend()" mat-raised-button color="primary" >Мок для тестирования</button>

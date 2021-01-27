@@ -34,6 +34,7 @@ export class SelectFieldComponent extends FormFieldAbstractComponent implements 
   }
 
   ngOnInit() {
+    this.form.valueChanges.subscribe(value => console.log(value));
   }
 
   getAddressPrompt(event) {

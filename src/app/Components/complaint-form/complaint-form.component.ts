@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {PdfDocumentService} from '../../Services/pdf-document.service';
-import {catchError, mergeMap} from 'rxjs/operators';
+import {catchError, filter, mergeMap} from 'rxjs/operators';
 import {forkJoin, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
@@ -64,10 +64,6 @@ export class ComplaintFormComponent implements OnInit {
   public productFields = formConstants.productForm;
 
   public fieldTypes = FormFieldType;
-  public consumerBankBik = '';
-  public consumerBankName = '';
-  public sellerName = '';
-  public sellerAddress = '';
   public showSellerForm = false;
   public showConsumerBankForm = false;
 
@@ -122,18 +118,23 @@ export class ComplaintFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.credentialsForm.patchValue({consumerInfo: '044030790'});
-    // this.productForm.patchValue({sellerINN: '2309085638'});
     this.addressForm.valueChanges.subscribe(() => {
       this.cdr.detectChanges();
     });
+    this.sellerInfoForm.valueChanges.subscribe(() => {
+      this.cdr.detectChanges();
+    });
     this.productForm.get('sellerINN').valueChanges.subscribe((value) => {
-      this.showSellerForm = value !== '';
+      if (!value.trim()) {
+        this.sellerInfoForm.reset();
+      }
       this.collectInformationAboutSeller();
     });
 
     this.credentialsForm.get('consumerInfo').valueChanges.subscribe((value) => {
-      this.showConsumerBankForm = value !== '';
+      if (!value.trim()) {
+        this.consumerInfoForm.reset();
+      }
       this.collectInfoAboutConsumerBank();
     });
   }
@@ -169,23 +170,31 @@ export class ComplaintFormComponent implements OnInit {
 
   collectInformationAboutSeller() {
     this.dadataService.getSellerInfo(this.productForm.controls.sellerINN.value)
+        .pipe(
+            filter(data => !!data.suggestions.length)
+        )
         .subscribe(dadataInformation => {
           console.log(dadataInformation);
           const sellerAddress = dadataInformation.suggestions[0].data.address.unrestricted_value;
           const sellerName = dadataInformation.suggestions[0].unrestricted_value;
           this.updateSellerInfoForm(sellerAddress, sellerName);
-    });
+          console.log(this.sellerInfoForm);
+          this.cdr.detectChanges();
+        });
   }
 
   collectInfoAboutConsumerBank() {
     this.dadataService.getBankInformation(this.credentialsForm.controls.consumerInfo.value)
+        .pipe(
+            filter(data => !!data.suggestions.length)
+        )
         .subscribe((consumerBankInfo) => {
           console.log(consumerBankInfo);
           const consumerBankName = consumerBankInfo.suggestions ? consumerBankInfo.suggestions[0].unrestricted_value : '';
           const consumerBankCorrAcc = consumerBankInfo.suggestions[0].data.correspondent_account;
           console.log(consumerBankInfo);
 
-          this.updateConsumerInfoForm(consumerBankName, consumerBankCorrAcc)
+          this.updateConsumerInfoForm(consumerBankName, consumerBankCorrAcc);
 
     });
   }

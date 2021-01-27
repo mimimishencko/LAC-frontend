@@ -14,6 +14,8 @@ export abstract class FormFieldAbstractComponent implements ControlValueAccessor
   constructor() { }
 
   writeValue(value: any) {
+    console.log(value);
+    // this.form.controls[this.formControlName].setValue(value);
     if (value !== undefined) {
       this.value = value;
     }
