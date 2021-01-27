@@ -1,15 +1,17 @@
 export interface IComplaint {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
   address: string;
   consumerBankBik: string;
   consumerBankName: string;
-  consumerInfo: string;
+  consumerBankCorrAcc: string;
   customerAccountNumber: string;
-  sellerINN: string;
   purchaseData: string;
   productName: string;
   sellerName: string;
   sellerAddress: string;
+  sellerINN: string;
+  phoneNumber: string;
+  saveUserData: boolean;
 }

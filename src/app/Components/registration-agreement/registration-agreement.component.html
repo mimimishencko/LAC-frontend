@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Подтвердите следующие действия</h2>
+
+<mat-dialog-content>
+
+    <mat-checkbox class="checkbox"
+                  [(ngModel)]="isUserAgree"
+                  [color]="'primary'"
+    >
+        Даю согласие на обрабоку персональных данных
+    </mat-checkbox>
+
+    <mat-checkbox class="checkbox"
+                  [(ngModel)]="wantToReg"
+                  [color]="'primary'"
+    >
+        Хочу зарегистрироваться в системе
+    </mat-checkbox>
+
+    <app-input-form-field *ngIf="wantToReg"
+    [form]="phoneNumberForm"
+                          [label]="'Номер телефона'"
+                          [formControlName]="'phone'"
+                          [required]="true"
+                          [placeholder]="'Для регистрации введите номер телефона'"
+    >
+
+    </app-input-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Отмена</button>
+    <button mat-button [mat-dialog-close]="wantToReg ? this.phoneNumberForm.value : true" [disabled]="!isUserAgree">Продолжить</button>
+</mat-dialog-actions>

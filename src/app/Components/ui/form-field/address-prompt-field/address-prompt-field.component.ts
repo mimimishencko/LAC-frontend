@@ -4,21 +4,21 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {DadataConfig, DadataType} from '@kolkov/ngx-dadata';
 import {DadataService} from '../../../../Services/dadata.service';
-import {IAddressRequest, IAutocompleteValue, IDadataResponse} from '../../../../Interfaces/dadata.interface';
+import {IAddressRequest, IDadataResponse} from '../../../../Interfaces/dadata.interface';
 
 @Component({
-  selector: 'app-select-field',
-  templateUrl: './select-field.component.html',
-  styleUrls: ['./select-field.component.scss'],
+  selector: 'app-address-prompt-field',
+  templateUrl: './address-prompt-field.component.html',
+  styleUrls: ['./address-prompt-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectFieldComponent),
+      useExisting: forwardRef(() => AddressPromptFieldComponent),
       multi: true,
     },
   ],
 })
-export class SelectFieldComponent extends FormFieldAbstractComponent implements OnInit {
+export class AddressPromptFieldComponent extends FormFieldAbstractComponent implements OnInit {
 
   @Output() index = new EventEmitter<number>();
 
@@ -33,9 +33,7 @@ export class SelectFieldComponent extends FormFieldAbstractComponent implements 
     super();
   }
 
-  ngOnInit() {
-    this.form.valueChanges.subscribe(value => console.log(value));
-  }
+  ngOnInit() {}
 
   getAddressPrompt(event) {
     const payload: IAddressRequest = {
@@ -43,14 +41,14 @@ export class SelectFieldComponent extends FormFieldAbstractComponent implements 
       locations: this.regionRestriction(this.formControlName),
       restrict_value: true,
     };
-    console.log(payload);
     this.dadataService.getAddressSuggestion(payload).subscribe((suggestions: IDadataResponse) => {
-          console.log(suggestions);
           const valueArray = suggestions.suggestions.map(s => s.unrestricted_value);
           this.options$.next(valueArray);
         }
     );
   }
+
+  // Next code is  for separate address fields, not used for now
 
   getGeoObjectFromRespose(response) {
     switch (this.formControlName) {
@@ -88,9 +86,5 @@ export class SelectFieldComponent extends FormFieldAbstractComponent implements 
     return name.split(' ').filter( v => {
       return (v !== 'Респ') && (v !== 'обл') &&  (v !== 'г') && (v !== 'Аобл') && (v !== 'край');
     }).join();
-  }
-
-  log(event) {
-    console.log(event);
   }
 }

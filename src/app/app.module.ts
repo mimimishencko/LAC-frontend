@@ -20,9 +20,12 @@ import { NgxDadataModule } from '@kolkov/ngx-dadata';
 import { FormFieldAbstractComponent } from './Components/ui/form-field/form-field-abstract.component';
 import { InputFormFieldComponent } from './Components/ui/form-field/input-form-field/input-form-field.component';
 import { DatepickerComponent } from './Components/ui/form-field/datepicker/datepicker.component';
-import { SelectFieldComponent } from './Components/ui/form-field/select-field/select-field.component';
+import { AddressPromptFieldComponent } from './Components/ui/form-field/address-prompt-field/address-prompt-field.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { InputDirective } from './Components/ui/form-field/select-field/input.directive';
+import { InputDirective } from './Components/ui/form-field/address-prompt-field/input.directive';
+import { RegistrationAgreementComponent } from './Components/registration-agreement/registration-agreement.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 export const MY_FORMATS = {
@@ -46,8 +49,9 @@ export const MY_FORMATS = {
     SnackBarComponent,
     InputFormFieldComponent,
     DatepickerComponent,
-    SelectFieldComponent,
-    InputDirective
+    AddressPromptFieldComponent,
+    InputDirective,
+    RegistrationAgreementComponent
   ],
   imports: [
     FormsModule,
@@ -65,9 +69,14 @@ export const MY_FORMATS = {
     MatSnackBarModule,
     NgxDadataModule,
     MatAutocompleteModule,
+    MatDialogModule,
+    MatCheckboxModule,
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'always'}},
+  ],
+  entryComponents: [
+    RegistrationAgreementComponent
   ],
   bootstrap: [AppComponent]
 })

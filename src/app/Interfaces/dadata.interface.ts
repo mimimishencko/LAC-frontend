@@ -2,11 +2,6 @@ export interface IDadataResponse {
    suggestions: ISuggestion[];
 }
 
-export interface IAutocompleteValue {
-    address: string;
-    postalCode: number;
-}
-
 export interface IAddressRequest {
     query: string;
     locations: {}[];

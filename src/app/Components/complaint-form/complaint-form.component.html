@@ -28,20 +28,20 @@
                                    [placeholder]="field.placeholder || ''"
                                    [formControlName]="field.formControlName"
                                    [required]="field.required"
-                                   [disabled]="addressFieldDisabled(field.formControlName)">
+                                   >
                  </mat-form-field>
              </ng-template>
 
              <ng-template #select>
-                 <app-select-field class = "flex-grow"
-                         [label]="field.label"
-                         [placeholder]="field.placeholder || ''"
-                         [form]="addressForm"
-                         [class]="'flex-grow'"
-                         [formControlName]="field.formControlName"
-                         [required]="field.required"
-                         [disabled]="addressFieldDisabled(field.formControlName)">
-                 </app-select-field>
+                 <app-address-prompt-field class = "flex-grow"
+                                           [label]="field.label"
+                                           [placeholder]="field.placeholder || ''"
+                                           [form]="addressForm"
+                                           [class]="'flex-grow'"
+                                           [formControlName]="field.formControlName"
+                                           [required]="field.required"
+                         >
+                 </app-address-prompt-field>
              </ng-template>
      </ng-container>
  </form>
@@ -80,15 +80,15 @@
  <div class="form-section-header" >Информация о продавце</div>
  <form class="form-container column-form-direction" [formGroup]="sellerInfoForm">
 
-     <app-select-field class = "flex-grow"
-                       [label]="'Адрес продавца'"
-                       [placeholder]="''"
-                       [form]="sellerInfoForm"
-                       [class]="'flex-grow'"
-                       [formControlName]="'sellerAddress'"
-                       [required]="true"
+     <app-address-prompt-field class = "flex-grow"
+                               [label]="'Адрес продавца'"
+                               [placeholder]="''"
+                               [form]="sellerInfoForm"
+                               [class]="'flex-grow'"
+                               [formControlName]="'sellerAddress'"
+                               [required]="true"
                        >
-     </app-select-field>
+     </app-address-prompt-field>
 
 
      <mat-form-field appearance="outline" class = "flex-grow">
@@ -141,6 +141,6 @@
 
  <div class="form-container form-button">
   <button  (click)="fakeSend()" mat-raised-button color="primary" >Мок для тестирования</button>
-  <button  (click)="checkInfo()" mat-raised-button color="primary" >Сгенерировать документ</button>
+  <button  (click)="openDialog()" mat-raised-button color="primary" >Сгенерировать документ</button>
  </div>
 

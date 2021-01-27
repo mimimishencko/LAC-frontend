@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectFieldComponent } from './select-field.component';
+import { AddressPromptFieldComponent } from './address-prompt-field.component';
 
 describe('SelectFieldComponent', () => {
-  let component: SelectFieldComponent;
-  let fixture: ComponentFixture<SelectFieldComponent>;
+  let component: AddressPromptFieldComponent;
+  let fixture: ComponentFixture<AddressPromptFieldComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectFieldComponent ]
+      declarations: [ AddressPromptFieldComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectFieldComponent);
+    fixture = TestBed.createComponent(AddressPromptFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
