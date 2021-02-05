@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'pdf',
     data: { title: 'Досудебная жалоба'},
     component: PdfPageComponent
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./Components/user-account/user-account.module').then(m => m.UserAccountModule)
   }
 ];
 

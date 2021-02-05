@@ -15,7 +15,7 @@ export class PdfDocumentService {
   constructor(private http: HttpClient) { }
 
   public generateDocument(userInfo): Observable<ArrayBuffer> {
-    return this.http.post(`${this.API_URL}/documents/generate_pretrial_appeal/`, userInfo, {
+    return this.http.post(`${this.API_URL}api/v1/documents/generate_pretrial_appeal`, userInfo, {
       responseType: 'arraybuffer'});
   }
 }

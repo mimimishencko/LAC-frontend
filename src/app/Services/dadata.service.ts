@@ -5,16 +5,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import * as dadata from '../constants/dadata-constants';
 import {IAddressRequest} from '../Interfaces/dadata.interface';
 import { environment } from '../../environments/environment';
+import {dadataConfig} from '../dadata.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DadataService {
-
-  public dadataConfig: DadataConfig = {
-    apiKey: '319411ed3286895a479d6faeaa1f6c2f1b5808ac',
-    type: DadataType.address
-  };
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +19,7 @@ export class DadataService {
         {headers: new HttpHeaders({
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            Authorization: 'Token ' + this.dadataConfig.apiKey}
+            Authorization: 'Token ' + dadataConfig.apiKey}
             )
         });
   }
@@ -36,7 +32,7 @@ export class DadataService {
       return this.http.post(dadata.customerInfoUrl, {query}, {headers: new HttpHeaders({
               'Content-Type': 'application/json',
               Accept: 'application/json',
-              Authorization: 'Token ' + this.dadataConfig.apiKey}
+              Authorization: 'Token ' + dadataConfig.apiKey}
           )
       });
   }
@@ -45,7 +41,7 @@ export class DadataService {
       return this.http.post(dadata.sellerInfoUrl, {query}, {headers: new HttpHeaders({
               'Content-Type': 'application/json',
               Accept: 'application/json',
-              Authorization: 'Token ' + this.dadataConfig.apiKey}
+              Authorization: 'Token ' + dadataConfig.apiKey}
           )
       });
   }

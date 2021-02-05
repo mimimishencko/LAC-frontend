@@ -1,10 +1,25 @@
 import {Component, EventEmitter, forwardRef, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormFieldAbstractComponent} from '../form-field-abstract.component';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {FormControl, FormGroupDirective, NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {DadataConfig, DadataType} from '@kolkov/ngx-dadata';
 import {DadataService} from '../../../../Services/dadata.service';
 import {IAddressRequest, IDadataResponse} from '../../../../Interfaces/dadata.interface';
+import {ErrorStateMatcher} from "@angular/material/core";
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+      control: FormControl | null,
+      form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+        control &&
+        control.invalid &&
+        (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
 
 @Component({
   selector: 'app-address-prompt-field',
@@ -21,13 +36,10 @@ import {IAddressRequest, IDadataResponse} from '../../../../Interfaces/dadata.in
 export class AddressPromptFieldComponent extends FormFieldAbstractComponent implements OnInit {
 
   @Output() index = new EventEmitter<number>();
+  matcher = new MyErrorStateMatcher();
 
   public options$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
-  public dadataConfig: DadataConfig = {
-    apiKey: '319411ed3286895a479d6faeaa1f6c2f1b5808ac',
-    type: DadataType.address
-  };
 
   constructor(private dadataService: DadataService) {
     super();

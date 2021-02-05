@@ -9,22 +9,50 @@
         Даю согласие на обрабоку персональных данных
     </mat-checkbox>
 
-    <mat-checkbox class="checkbox"
-                  [(ngModel)]="wantToReg"
-                  [color]="'primary'"
+    <mat-form-field class="reg-form-field" appearance="outline"  [formGroup]="phoneNumberForm"
     >
-        Хочу зарегистрироваться в системе
-    </mat-checkbox>
+        <mat-label>Номер телефона</mat-label>
+        <input matInput
+               [formControlName]="'phone'"
+               [required]="true"
+               [placeholder]="'Для регистрации введите номер телефона'"
+               [type]="'text'"
+               [prefix]="'+7'"
+               [mask]="'(000)-000-00-00'"
+        >
+    </mat-form-field>
 
-    <app-input-form-field *ngIf="wantToReg"
-    [form]="phoneNumberForm"
-                          [label]="'Номер телефона'"
-                          [formControlName]="'phone'"
-                          [required]="true"
-                          [placeholder]="'Для регистрации введите номер телефона'"
+    <mat-form-field appearance="outline"  [formGroup]="phoneNumberForm"
     >
+        <mat-label>Пароль</mat-label>
+        <input matInput
+               [formControlName]="'password'"
+               [required]="true"
+        >
 
-    </app-input-form-field>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" [formGroup]="phoneNumberForm"
+    >
+        <mat-label>Подтвердите пароль</mat-label>
+        <input matInput
+               [formControlName]="'confirmPassword'"
+               [required]="true"
+        >
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="sendCode()">Отправить код</button>
+
+    <mat-form-field class="code-field" appearance="outline" *ngIf="step===2"  [formGroup]="phoneNumberForm"
+    >
+        <mat-label>Код из смс</mat-label>
+        <input matInput
+               [formControlName]="'code'"
+               [required]="true"
+        >
+    </mat-form-field>
+
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">

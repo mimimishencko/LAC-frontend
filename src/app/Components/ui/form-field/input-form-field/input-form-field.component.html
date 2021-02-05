@@ -4,7 +4,8 @@
            [placeholder]="placeholder"
            (change)="propagateChange($event.target.value)"
            [required]="required"
-           [disabled]="disabled">
+           [disabled]="disabled"
+    >
     <mat-error *ngIf="required && form.controls[formControlName].invalid">Это поле обязательно</mat-error>
 </mat-form-field>
 

@@ -98,7 +98,7 @@ export class ComplaintFormComponent implements OnInit {
     initForms(): void {
         this.fioForm = this.fb.group({
             firstName:  ['', Validators.required],
-            middleName: ['', Validators.required],
+            middleName: [''],
             lastName:  ['', Validators.required]
         });
 
@@ -200,21 +200,49 @@ export class ComplaintFormComponent implements OnInit {
 
     }
 
-    updateSellerInfoForm(sellerAddress, sellerName): void {
-        this.sellerInfoForm.patchValue({sellerAddress, sellerName});
-    }
-
-    updateConsumerInfoForm(consumerBankName, consumerBankCorrAcc): void {
-        this.consumerInfoForm.patchValue({consumerBankName, consumerBankCorrAcc});
-    }
-
 
     openDialog() {
-        const dialogRef = this.dialog.open(RegistrationAgreementComponent);
+        this.validateForms();
+        if (!this.isFormsValid()) {
+            return;
+        }
+        const dialogRef = this.dialog.open(RegistrationAgreementComponent, {
+            data: {
+                ...this.fioForm,
+                ...this.addressForm
+            }
+        });
 
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });
+    }
+
+    private validateForms(): void {
+     this.fioForm.markAllAsTouched();
+     this.addressForm.markAllAsTouched();
+     this.credentialsForm.markAllAsTouched();
+     this.productForm.markAllAsTouched();
+     this.sellerInfoForm.markAllAsTouched();
+     this.consumerInfoForm.markAllAsTouched();
+     console.log(this.sellerInfoForm);
+    }
+
+    private isFormsValid(): boolean {
+        return this.fioForm.valid &&
+        this.addressForm.valid &&
+        this.credentialsForm.valid &&
+        this.productForm.valid &&
+        this.sellerInfoForm.valid &&
+        this.consumerInfoForm.valid;
+    }
+
+    private updateSellerInfoForm(sellerAddress, sellerName): void {
+        this.sellerInfoForm.patchValue({sellerAddress, sellerName});
+    }
+
+    private updateConsumerInfoForm(consumerBankName, consumerBankCorrAcc): void {
+        this.consumerInfoForm.patchValue({consumerBankName, consumerBankCorrAcc});
     }
 }
 

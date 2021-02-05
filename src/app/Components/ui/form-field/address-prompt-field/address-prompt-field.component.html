@@ -6,13 +6,14 @@
            [matAutocomplete]="auto"
            [value]="value"
            [disabled]="disabled"
+           [errorStateMatcher]="matcher"
             appInput
            (getPrompt)="getAddressPrompt($event)"
     >
+    <mat-error *ngIf="required && form.controls[formControlName].hasError('required')">Это поле обязательно</mat-error>
     <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of options$ | async" [value]="option" (onSelectionChange)="propagateChange($event.source.value)">
             {{option}}
         </mat-option>
     </mat-autocomplete>
-    <mat-error *ngIf="required && form.controls[formControlName].invalid">Это поле обязательно</mat-error>
 </mat-form-field>

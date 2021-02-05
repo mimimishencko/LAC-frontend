@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PdfPageComponent} from './Components/pdf-page/pdf-page.component';
 import { ComplaintFormComponent } from './Components/complaint-form/complaint-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -24,8 +24,12 @@ import { AddressPromptFieldComponent } from './Components/ui/form-field/address-
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { InputDirective } from './Components/ui/form-field/address-prompt-field/input.directive';
 import { RegistrationAgreementComponent } from './Components/registration-agreement/registration-agreement.component';
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { UserAccountComponent } from './Components/user-account/user-account.component';
+import {IConfig, NgxMaskModule} from 'ngx-mask';
+import { LoginComponent } from './Components/login/login.component';
+import {RedirectHttpInterceptor} from "./Services/redirect.interceptor";
 
 
 export const MY_FORMATS = {
@@ -40,6 +44,8 @@ export const MY_FORMATS = {
   }
 };
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
+
 
 @NgModule({
   declarations: [
@@ -51,7 +57,8 @@ export const MY_FORMATS = {
     DatepickerComponent,
     AddressPromptFieldComponent,
     InputDirective,
-    RegistrationAgreementComponent
+    RegistrationAgreementComponent,
+    LoginComponent
   ],
   imports: [
     FormsModule,
@@ -71,9 +78,11 @@ export const MY_FORMATS = {
     MatAutocompleteModule,
     MatDialogModule,
     MatCheckboxModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'always'}},
+    {provide: HTTP_INTERCEPTORS, useClass: RedirectHttpInterceptor, multi: true}
   ],
   entryComponents: [
     RegistrationAgreementComponent

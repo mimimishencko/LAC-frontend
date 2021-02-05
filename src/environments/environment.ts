@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://ec2-54-214-42-69.us-west-2.compute.amazonaws.com:80/api/v1',
+  API_URL: 'https://lac-backend.herokuapp.com/',
+  APP_URL: 'http://localhost:4200'
 };
 
 // http://ec2-52-13-85-235.us-west-2.compute.amazonaws.com:80

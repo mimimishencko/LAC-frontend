@@ -5,9 +5,10 @@
            [matDatepickerFilter]="filter"
            [matDatepicker]="picker"
            [disabled]="disabled"
+           [value]="value"
            (change)="propagateChange($event.target.value)"
            [required]="required">
+    <mat-error *ngIf="form.controls[formControlName].hasError('invalid')">Это поле обязательно</mat-error>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-error *ngIf="form.controls[formControlName].invalid">Это поле обязательно</mat-error>
 </mat-form-field>
