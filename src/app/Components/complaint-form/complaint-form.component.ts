@@ -225,7 +225,6 @@ export class ComplaintFormComponent implements OnInit {
      this.productForm.markAllAsTouched();
      this.sellerInfoForm.markAllAsTouched();
      this.consumerInfoForm.markAllAsTouched();
-     console.log(this.sellerInfoForm);
     }
 
     private isFormsValid(): boolean {

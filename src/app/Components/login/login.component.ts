@@ -13,8 +13,5 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
-  public redirectToCognito(): void {
-    this.authService.redirectToLogin(APP_URL).subscribe();
-  }
 
 }

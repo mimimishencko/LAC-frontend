@@ -9,11 +9,11 @@ export class RedirectHttpInterceptor implements HttpInterceptor {
             console.log(event);
             if (event instanceof HttpResponseBase) {
                 const response = event as HttpResponseBase;
-                console.log(response);
-                const redirectURL = response.url;
-
-                window.location.href = redirectURL;
-                return;
+                if (response.url.includes('login')) {
+                    console.log(response);
+                    window.location.href = response.url;
+                    return;
+                }
             }
         }));
     }

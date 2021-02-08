@@ -1,0 +1,8 @@
+{
+  "/login*": {
+    "target": "https://lac.auth.us-west-2.amazoncognito.com",
+    "secure": true,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

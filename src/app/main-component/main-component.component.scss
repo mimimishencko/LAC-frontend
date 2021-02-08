@@ -1,0 +1,19 @@
+
+
+:host {
+  display: flex;
+  justify-content: center;
+  width: auto;
+  height: 100vh;
+
+  button {
+    margin-right: 50px;
+    width: 250px;
+    height: 100px;
+    font-size: 20px;
+  }
+
+  .container {
+    margin: auto;
+  }
+}

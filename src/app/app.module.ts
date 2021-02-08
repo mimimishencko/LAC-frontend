@@ -29,7 +29,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UserAccountComponent } from './Components/user-account/user-account.component';
 import {IConfig, NgxMaskModule} from 'ngx-mask';
 import { LoginComponent } from './Components/login/login.component';
-import {RedirectHttpInterceptor} from "./Services/redirect.interceptor";
+import { MainComponent } from './main-component/main.component';
+import {RedirectHttpInterceptor} from './Interceptors/redirect.interceptor';
 
 
 export const MY_FORMATS = {
@@ -58,7 +59,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     AddressPromptFieldComponent,
     InputDirective,
     RegistrationAgreementComponent,
-    LoginComponent
+    LoginComponent,
+    MainComponent
   ],
   imports: [
     FormsModule,
